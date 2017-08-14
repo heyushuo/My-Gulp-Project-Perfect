@@ -1,0 +1,18 @@
+.box {
+  width: 100px;
+  height: 200px;
+}
+.box p {
+  height: 300px;
+  background: red;
+}
+.box h1 {
+  -webkit-box-shadow: #11777C 0px 0px 0px 0px;
+          box-shadow: #11777C 0px 0px 0px 0px;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+.box p {
+  -webkit-box-shadow: #11777C 0px 0px 0px 0px;
+          box-shadow: #11777C 0px 0px 0px 0px;
+}

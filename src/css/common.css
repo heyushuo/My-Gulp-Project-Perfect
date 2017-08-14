@@ -1,0 +1,24 @@
+.box {
+  width: 100px;
+  height: 200px;
+}
+.box p {
+  height: 300px;
+  background: red;
+}
+#box {
+  height: 34px;
+}
+#box h1 {
+  height: 200px;
+  background: red;
+}
+#heyushuo {
+  background: red;
+}
+#head {
+  width: 200px;
+}
+#head p {
+  height: 300px;
+}
