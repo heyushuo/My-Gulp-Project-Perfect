@@ -10,6 +10,9 @@ var open          = require('gulp-open');//自动打开页面
 var connect       = require('gulp-connect');//开启本地服务
 var del           = require('del');//删除文件//var clean= require('gulp-clean');//删除文件
 var rev           = require('gulp-rev');//文件名加md5
+var rev1          = require('gulp-asset-rev');//文件名加md5
+var revCollector  = require('gulp-rev-collector');
+var runSequence   = require('run-sequence');
 //定义目录路径
 var app = {
     //源代码，文件目录
@@ -27,7 +30,10 @@ gulp.task('lib',function(){
 });
 //html文件需要拷贝到  prdPath中
 gulp.task('html',function(){
-    gulp.src(app.srcPath+'**/*.html')//读取这个文件夹下边的所有的文件或者文件夹的html文件
+    gulp.src(['dist/rev/rev-manifest.json','src/index.html'])//读取这个文件夹下边的所有的文件或者文件夹的html文件
+    .pipe(revCollector({
+    	replaceReved:true
+    }))
     .pipe(gulp.dest(app.prdPath))//读取完整后进行操作  西安拷贝到整合目录 并重命名，在拷贝到生产目录并重命名
     .pipe(connect.reload());  //文件更改后自动变异 并执行启动服务重新打开浏览器
 });
@@ -35,11 +41,13 @@ gulp.task('html',function(){
 gulp.task('less',function(){
     gulp.src(app.srcPath + 'less/**/*.less')
     .pipe(less())
-    .pipe(autoprefixer('last 2 version'))//加前缀
+    .pipe(autoprefixer('last 2 versions','>5%'))//加前缀
     .pipe(gulp.dest(app.srcPath + 'css'))
     .pipe(cleanCss())
     .pipe(rev())
     .pipe(gulp.dest(app.prdPath + 'css'))
+    .pipe(rev.manifest())
+    .pipe(gulp.dest(app.prdPath + 'rev/css'))
     .pipe(connect.reload())
 });
 
@@ -48,7 +56,10 @@ gulp.task('script',function(){
     gulp.src(app.srcPath + 'js/**/*.js')
     .pipe(concat('all.js'))
     .pipe(uglify())
+//  .pipe(rev())
     .pipe(gulp.dest(app.prdPath + 'js'))
+//  .pipe(rev.manifest())
+//  .pipe(gulp.dest(app.prdPath + 'rev'))
     .pipe(connect.reload());
 });
 
@@ -73,7 +84,8 @@ gulp.task('clean',function(){
 //总的方法
 gulp.task('build',['clean'],function(){
 	//回调函数,先执行clean,在执行回调函数
-	gulp.start('img', 'script', 'less', 'html', 'lib');
+	runSequence(['less'],['img'], ['script'],  ['lib'], ['html'])
+//	gulp.start('img', 'script', 'less', 'html', 'lib');
 });
 
 

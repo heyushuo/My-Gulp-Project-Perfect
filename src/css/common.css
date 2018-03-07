@@ -22,3 +22,27 @@
 #head p {
   height: 300px;
 }
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-shadow: 5px 5px 0px #ff0000;
+          box-shadow: 5px 5px 0px #ff0000;
+  border-radius: 5px;
+  -webkit-transform: rotateX(20px);
+          transform: rotateX(20px);
+}
+.flex1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
